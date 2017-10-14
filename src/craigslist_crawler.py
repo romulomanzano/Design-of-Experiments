@@ -30,41 +30,48 @@ FILENAME_TEMPLATE = 'craigslist_newyork_{uniqueid}_{scrape_date}.json'
 
 # Set up ChromeDriver
 logger.info('Setting up ChromeDriver')
-chromedriver = "/Users/rmdelgad/Documents/ChromeDriver/chromedriver.exe"
+chromedriver = "./ChromeDriver/chromedriver.exe"
 os.environ["webdriver.chrome.driver"] = chromedriver
 driver = webdriver.Chrome(chromedriver)
 
 
 def scrape_page(listing_url):
     logger.info('Crawling {}'.format(listing_url))
+    elementFound = True
+    """try:
+        # Click the reply button
+        reply_button = driver.find_element_by_xpath('//button[@class="reply_button js-only"]')
+        reply_button.click()
+        elementFound = True
+    except:
+        print("couldn't find element")
+        print(driver.page_source)
+        raise ValueError("Something wen't wrong, look at the blob")
+    """    
 
-    # Click the reply button
-    reply_button = driver.find_element_by_xpath('//button[@class="reply_button js-only"]')
-    reply_button.click()
-
-    # Extract the page source
-    driver.get(listing_url)
-    time.sleep(2)
-    page = driver.page_source
-
-    # Store the scraped page and metadata in a dictionary
-    scrape_dict = {
-        'scrape_date': SCRAPE_DATE.strftime('%Y-%m-%d')
-        ,'body': page
-        ,'url': driver.current_url
-    }
-
-    # Parse out the unique ID in the url to use in the filename
-    unique_id = re.search('\/(\d+)\.html$', driver.current_url).group(1)
-
-    # Save the file down
-    filename = FILENAME_TEMPLATE.format(uniqueid=unique_id, scrape_date=SCRAPE_DATE.strftime('%Y%m%d'))
-    filepath = os.path.join(DATA_DIR, filename)
-    logger.info('Saving to {}'.format(filepath))
-    with open(filepath, 'w') as f:
-        json.dump(scrape_dict, f)
-
-
+    if elementFound:
+        # Extract the page source
+        driver.get(listing_url)
+        time.sleep(2)
+        page = driver.page_source
+    
+        # Store the scraped page and metadata in a dictionary
+        scrape_dict = {
+            'scrape_date': SCRAPE_DATE.strftime('%Y-%m-%d')
+            ,'body': page
+            ,'url': driver.current_url
+        }
+    
+        # Parse out the unique ID in the url to use in the filename
+        unique_id = re.search('\/(\d+)\.html$', driver.current_url).group(1)
+    
+        # Save the file down
+        filename = FILENAME_TEMPLATE.format(uniqueid=unique_id, scrape_date=SCRAPE_DATE.strftime('%Y%m%d'))
+        filepath = os.path.join(DATA_DIR, filename)
+        logger.info('Saving to {}'.format(filepath))
+        with open(filepath, 'w') as f:
+            json.dump(scrape_dict, f)
+    
 def crawl_page_listings():
 
     logger.info('Crawling the apartment links on {}'.format(driver.current_url))
@@ -76,6 +83,7 @@ def crawl_page_listings():
 
     # Crawl each listing url
     for listing_url in listing_urls:
+        print(listing_url)
         scrape_page(listing_url)
 
 
