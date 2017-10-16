@@ -87,10 +87,17 @@ def crawl_page_listings():
         scrape_page(listing_url)
 
 
-def main():
+def main(aptType = 'room'):
+    #choose between either 'room' or 'family unit', defined as 2br+ (entire unit).
 
     # Visit the start page
-    START_URL = 'https://newyork.craigslist.org/d/rooms-shares/search/roo'
+    if aptType == 'room':
+        START_URL = 'https://newyork.craigslist.org/d/rooms-shares/search/roo'
+    elif aptType == 'family unit':
+        START_URL = 'https://newyork.craigslist.org/search/abo?min_bedrooms=2&availabilityMode=0'
+    else:
+        START_URL = 'https://newyork.craigslist.org/d/rooms-shares/search/roo'
+    
     driver.get(START_URL)
 
     # Paginate through the listing pages, crawling & scraping each listing link
@@ -118,4 +125,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    main(aptType = 'family unit')
