@@ -8,6 +8,7 @@ This is a temporary script file.
 
 from difflib import SequenceMatcher
 import pandas as pd
+import random
 #import numpy as np
 
 data = pd.read_csv('./data/craigslist_ny_listings_cleaned_20171029.csv', encoding='latin-1')
@@ -34,6 +35,15 @@ def determine_top_match_from_row(row,searchList):
     scores = determine_similarity_score_list(str(row['Listed By Cleaned']),searchList)
     return scores[0]
 
+
+def determine_85_perc_rand_match_from_row(row,searchList):
+    scores = determine_similarity_score_list(str(row['Listed By Cleaned']),searchList)
+    score85 = list([x for x in scores if x[1] >= 0.85])
+    if len(score85) > 0:
+        return random.choice(score85)
+    return (row['Listed By Cleaned'],1.0)
+
+
 #testing the functions
 determine_similarity_score_list('willhawkins',uniqPosters)
 determine_top_match('willhawkins',uniqPosters)
@@ -42,6 +52,10 @@ determine_top_match('willhawkins',uniqPosters)
 #adding top element to dataframe as column(s)
 
 data['SequenceMatcherResult'] = data.apply(determine_top_match_from_row,searchList=uniqPosters,axis=1)
+data['SequenceMatcherResult85Rand'] = data.apply(determine_85_perc_rand_match_from_row,searchList=uniqPosters,axis=1)
+#
 data[['topMatch', 'score']] = data['SequenceMatcherResult'].apply(pd.Series)
+data[['topMatch85', 'score85']] = data['SequenceMatcherResult85Rand'].apply(pd.Series)
+
 #write to csv
 data.to_csv('./data/craigslist_ny_listings_cleaned__Sequence_Match_20171029.csv')
