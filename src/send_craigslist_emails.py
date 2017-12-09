@@ -16,7 +16,7 @@ email_df = pd.read_csv('Craigslist_Manhattan_Nov20_Rdy4Email.csv')
 email_df = email_df[~(email_df['Sender Email'] == 'bernard.c.gibson@gmail.com')]
 
 # Constants
-FROM_PWD = "w241@ptRent1ng"
+FROM_PWD = ""
 SMTL_SSL_HOST = 'smtp.gmail.com'  # smtp.mail.yahoo.com
 SMTPL_SSL_PORT = 465
 SUBJECT_TEMPLATE = 'Your listing "{}" on Craigslist'

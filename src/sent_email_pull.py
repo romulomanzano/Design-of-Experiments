@@ -20,7 +20,7 @@ import email
 import pandas as pd
 
 ORG_EMAIL   = "@gmail.com"
-FROM_PWD    = "w241@ptRent1ng"
+FROM_PWD    = ""
 SMTP_SERVER = "imap.gmail.com"
 SMTP_PORT   = 993
 

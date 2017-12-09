@@ -29,7 +29,7 @@ Alejandro"""
 
 #
 ORG_EMAIL   = "@gmail.com"
-FROM_PWD    = "w241@ptRent1ng"
+FROM_PWD    = ""
 act = "alej.gonzalez.37"
 FROM_EMAIL  =  act + ORG_EMAIL
 smtp_ssl_host = 'smtp.gmail.com'  # smtp.mail.yahoo.com
