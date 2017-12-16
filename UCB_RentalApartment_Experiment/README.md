@@ -7,9 +7,9 @@ Do specific attributes disclosed in a rental application affect the response rat
 
 **Credit to:**
 
-- [Boris Garber](garber.boris@berkeley.edu)
-- [Ryan Delgado](rmdelgad2013@berkeley.edu)
-- [Romulo Manzano](rmanzano@berkeley.edu)
+- Boris Garber - <garber.boris@berkeley.edu>
+- Ryan Delgado - <rmdelgad2013@berkeley.edu>
+- Romulo Manzano - <rmanzano@berkeley.edu>
 
 
 **Abstract**
